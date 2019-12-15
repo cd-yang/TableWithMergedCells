@@ -1,4 +1,3 @@
-using System;
 using DocumentFormat.OpenXml;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
@@ -9,10 +8,11 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            if (false)
-                CreateTableWithVerticalMerge("testTable.docx");
-            else
-                CreateTableWithHorizontalMerge("testTable.docx");
+            //if (false)
+            //    CreateTableWithVerticalMerge("testTable.docx");
+            //else
+            //    CreateTableWithHorizontalMerge("testTable.docx");
+            CreateTableWithComplexHeader("testTable.docx");
         }
 
         public static void CreateTableWithVerticalMerge(string fileName)
@@ -175,6 +175,183 @@ namespace ConsoleApp1
                 tc = new TableCell();
                 tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
                 tc.Append(new Paragraph(new Run(new Text("22"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                // Append the table to the document.
+                doc.MainDocumentPart.Document.Body.Append(table);
+            }
+        }
+
+        public static void CreateTableWithComplexHeader(string fileName)
+        {
+            using (WordprocessingDocument doc
+                = WordprocessingDocument.Open(fileName, true))
+            {
+                Table table = new Table();
+                TableProperties tblProp = new TableProperties(
+                    new TableBorders(
+                        new TopBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        },
+                        new BottomBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        },
+                        new LeftBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        },
+                        new RightBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        },
+                        new InsideHorizontalBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        },
+                        new InsideVerticalBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 12
+                        }
+                    )
+                );
+                table.AppendChild<TableProperties>(tblProp);
+
+
+
+                TableRow tr = new TableRow();
+
+                TableCell tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() {Val = MergedCellValues.Restart }));
+                tc.Append(new Paragraph(new Run(new Text("1"))));
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() {Val = MergedCellValues.Restart }));
+                tc.Append(new Paragraph(new Run(new Text("11"))));
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("111"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("222"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() {Val = MergedCellValues.Restart }));
+                tc.Append(new Paragraph(new Run(new Text("22"))));
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("333"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("444"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Restart }));
+                tc.Append(new Paragraph(new Run(new Text("2"))));
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("33"))));
+                tc.Append(new TableCellProperties(new GridSpan() {Val = 2 }));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() { Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("44"))));
+                tc.Append(new TableCellProperties(new GridSpan() {Val = 2 }));
                 tr.Append(tc);
 
                 table.Append(tr);
