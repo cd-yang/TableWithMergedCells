@@ -1,8 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DocumentFormat.OpenXml;
+using DocumentFormat.OpenXml.Packaging;
+using DocumentFormat.OpenXml.Wordprocessing;
 
 namespace ConsoleApp1
 {
@@ -10,12 +9,100 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            // The code provided will print ‘Hello World’ to the console.
-            // Press Ctrl+F5 (or go to Debug > Start Without Debugging) to run your app.
-            Console.WriteLine("Hello World!");
-            Console.ReadKey();
+            if (false)
+                CreateTableWithVerticalMerge("testTable.docx");
+            else
+                CreateTableWithHorizontalMerge("testTable.docx");
+        }
 
-            // Go to http://aka.ms/dotnet-get-started-console to continue learning how to build a console app! 
+        public static void CreateTableWithVerticalMerge(string fileName)
+        {
+            // Use the file name and path passed in as an argument 
+            // to open an existing Word 2007 document.
+
+            using (WordprocessingDocument doc
+                = WordprocessingDocument.Open(fileName, true))
+            {
+                Table table = new Table();
+                TableProperties tblProp = new TableProperties(
+                    new TableBorders(
+                        new TopBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        },
+                        new BottomBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        },
+                        new LeftBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        },
+                        new RightBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        },
+                        new InsideHorizontalBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        },
+                        new InsideVerticalBorder()
+                        {
+                            Val =
+                            new EnumValue<BorderValues>(BorderValues.BasicThinLines),
+                            Size = 24
+                        }
+                    )
+                );
+                table.AppendChild<TableProperties>(tblProp);
+
+
+                TableRow tr = new TableRow();
+
+                TableCell tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() {Val = MergedCellValues.Restart }));
+                tc.Append(new Paragraph(new Run(new Text("1"))));
+                tr.Append(tc);
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("2"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                tr = new TableRow();
+
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new TableCellProperties(new VerticalMerge() {Val = MergedCellValues.Continue }));
+                tc.Append(new Paragraph());
+                tr.Append(tc);
+
+                // Create a second table cell by copying the OuterXml value of the first table cell.
+                tc = new TableCell();
+                tc.Append(new TableCellProperties(new TableCellWidth() { Type = TableWidthUnitValues.Auto }));
+                tc.Append(new Paragraph(new Run(new Text("22"))));
+                tr.Append(tc);
+
+                table.Append(tr);
+
+
+                // Append the table to the document.
+                doc.MainDocumentPart.Document.Body.Append(table);
+            }
         }
     }
 }
